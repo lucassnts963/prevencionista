@@ -10,14 +10,14 @@ class OpportunitiesSqliteRepository implements OpportunityRepository {
   OpportunitiesSqliteRepository(this.database);
 
   @override
-  Future<int?> create(OpportunityCreateDTO input) async {
+  Future<int> create(OpportunityCreateDTO input) async {
     print(input.toMap());
     try {
       int id = await database.insert(Sqlite.OPPORTUNITIES_TABLE, input.toMap());
       return id;
     } on Exception catch (error) {
       print('Erro ao criar oportunidade! $error');
-      return null;
+      rethrow;
     }
   }
 
@@ -31,7 +31,7 @@ class OpportunitiesSqliteRepository implements OpportunityRepository {
   }
 
   @override
-  Future<List<Opportunity>?> findAll(int inspectionId) async {
+  Future<List<Opportunity>> findAll(int inspectionId) async {
     try {
       // var result = await database.rawQuery('SELECT * FROM ${Sqlite.OPPORTUNITIES_TABLE} WHERE ${OpportunityTable.inspectionId} = ?', [inspectionId]);
       var result = await database.query(Sqlite.OPPORTUNITIES_TABLE, where: '${OpportunityTable.inspectionId} = ?', whereArgs: [inspectionId]);
@@ -46,12 +46,12 @@ class OpportunitiesSqliteRepository implements OpportunityRepository {
       return opportunities;
     } on Exception catch (error) {
       print('Erro ao consultar todas as oportunidades! $error');
-      return null;
+      rethrow;
     }
   }
 
   @override
-  Future<Opportunity?> findById(int id) async {
+  Future<Opportunity> findById(int id) async {
     try {
       var result = await database.query(Sqlite.OPPORTUNITIES_TABLE, where: '${OpportunityTable.id} = ?', whereArgs: [id]);
 
@@ -62,7 +62,7 @@ class OpportunitiesSqliteRepository implements OpportunityRepository {
       return Opportunity.fromMap(rawData);
     } on Exception catch (error) {
       print('Erro ao consultar oportunidade pelo id! $error');
-      return null;
+      rethrow;
     }
   }
 
@@ -75,6 +75,15 @@ class OpportunitiesSqliteRepository implements OpportunityRepository {
     } on Exception catch (error) {
       print('Erro ao atualizar oportunidade! $error');
       return -1;
+    }
+  }
+
+  @override
+  Future<void> deleteByInspectionId(int inspectionId) async {
+    try {
+      await database.delete(Sqlite.OPPORTUNITIES_TABLE, where: '${OpportunityTable.inspectionId} = ?', whereArgs: [inspectionId]);
+    } on Exception catch(error) {
+      print('Erro ao tentar excluir um registro de oportunidade! $error');
     }
   }
 }

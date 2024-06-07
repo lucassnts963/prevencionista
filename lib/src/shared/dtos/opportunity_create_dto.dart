@@ -13,6 +13,7 @@ class OpportunityCreateDTO {
 
   Map<String, dynamic> toMap() {
     return {
+      OpportunityTable.id: id,
       OpportunityTable.description: description,
       OpportunityTable.local: local,
       OpportunityTable.action: action,

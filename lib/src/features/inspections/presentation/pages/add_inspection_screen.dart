@@ -1,16 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:prevencionista/src/features/inspections/domain/usecases/add_inspection_usecase.dart';
 
-class AddInspectionScreen extends StatefulWidget {
-  const AddInspectionScreen({super.key});
+class AddInspectionScreen extends StatelessWidget {
+  AddInspectionScreen({super.key});
 
-  @override
-  State<AddInspectionScreen> createState() => _AddInspectionScreenState();
-}
-
-class _AddInspectionScreenState extends State<AddInspectionScreen> {
   final _controllers = {
     'name': TextEditingController(),
   };
@@ -21,6 +15,7 @@ class _AddInspectionScreenState extends State<AddInspectionScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: Theme.of(context).iconTheme,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Padding(

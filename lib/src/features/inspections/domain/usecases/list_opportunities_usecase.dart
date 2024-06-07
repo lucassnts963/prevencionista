@@ -6,10 +6,14 @@ import 'package:sqflite/sqflite.dart';
 
 class ListOpportunitiesUseCase {
 
-  static Future<List<Opportunity>?> execute(int inspectionId) async {
-    Database database = await Sqlite.getDatabase();
-    OpportunityRepository repository = OpportunitiesSqliteRepository(database);
-    List<Opportunity>? opportunities = await repository.findAll(inspectionId);
-    return opportunities;
+  static Future<List<Opportunity>> execute(int inspectionId) async {
+    try {
+      Database database = await Sqlite.getDatabase();
+      OpportunityRepository repository = OpportunitiesSqliteRepository(database);
+      List<Opportunity>? opportunities = await repository.findAll(inspectionId);
+      return opportunities;
+    } on Exception catch (error) {
+      rethrow;
+    }
   }
 }

@@ -5,21 +5,16 @@ import 'package:prevencionista/src/features/inspections/domain/repositories/insp
 import 'package:sqflite/sqflite.dart';
 
 class AddInspectionUseCase {
-  static Future<Inspection?> execute(Map<String, dynamic> map) async {
+  static Future<Inspection> execute(Map<String, dynamic> map) async {
     try {
       Database database = await Sqlite.getDatabase();
       InspectionsRepository repository = InspectionsSqliteRepository(database);
-      int? id = await repository.create(map);
+      int id = await repository.create(map);
 
-      if (id != null) {
-        return await repository.findById(id);
-      }
-
-      return null;
+      return await repository.findById(id);
     } on Exception catch (error) {
       print('Erro ao AddInspectionUseCase: $error');
-      return null;
+      rethrow;
     }
-
   }
 }

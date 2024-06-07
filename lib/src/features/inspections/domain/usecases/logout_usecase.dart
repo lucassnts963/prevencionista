@@ -1,0 +1,5 @@
+class LogoutUseCase {
+  static execute() {
+
+  }
+}

@@ -4,18 +4,16 @@ import 'package:prevencionista/src/features/inspections/domain/repositories/oppo
 import 'package:sqflite/sqflite.dart';
 
 class DeleteOpportunityUseCase {
-  static Future<int> execute(int id) async {
+  static Future<void> execute(int id) async {
     try {
       Database database = await Sqlite.getDatabase();
       OpportunityRepository repository = OpportunitiesSqliteRepository(database);
       await repository.delete(id);
-      print('DeleteOpportunityUseCase() - id: $id - type: ${id.runtimeType}');
-
-      return 1;
+      // print('DeleteOpportunityUseCase() - id: $id - type: ${id.runtimeType}');
 
     } on Exception catch(error) {
       print('Erro ao DeleteOpportunityUseCase: $error');
-      return -1;
+      rethrow;
     }
   }
 }

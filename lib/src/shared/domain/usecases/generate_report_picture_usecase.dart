@@ -84,7 +84,7 @@ class GenerateReportPictureUseCase {
 
         BitmapFont font = _font((await loadAssetFont()).buffer.asUint8List());
 
-        imageBefore = copyResize(imageBefore, width: width, height: height);
+        imageBefore = copyResize(_rotate(imageBefore), width: width, height: height);
         int xBefore = 500;
         int yBefore = border*sizeLine;
         Image rectBefore = drawRect(imageBefore, x1: border, y1: border, x2: xBefore, y2: yBefore, color: ColorFloat64.rgb(255, 255, 255));

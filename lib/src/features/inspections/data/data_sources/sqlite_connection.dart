@@ -4,13 +4,25 @@ import 'package:path/path.dart';
 class Sqlite {
   static String DATABASE_NAME = 'inspection.db';
   static String INSPECTIONS_TABLE = 'inspections';
-  static String OPPORTUNITIES_TABLE = 'opportunity';
+  static String OPPORTUNITIES_TABLE = 'opportunities';
+  static String USER_TABLE = 'users';
 
   static Future<Database> getDatabase() async {
     String databasesPath  = await getDatabasesPath();
     String path = join(databasesPath, DATABASE_NAME);
 
     Database database = await openDatabase(path, onCreate: (db, version) async {
+      try {
+        await db.execute("""
+          CREATE TABLE $USER_TABLE (
+            ${UserTable.id} INTEGER PRIMARY KEY, 
+            ${UserTable.name} TEXT
+          )          
+          """);
+      } on Exception catch (error) {
+        print('Erro ao criar tabela $USER_TABLE: ${error.toString()}');
+      }
+
       try {
         await db.execute("""
           CREATE TABLE $INSPECTIONS_TABLE (
@@ -44,6 +56,11 @@ class Sqlite {
 
     return database;
   }
+}
+
+class UserTable {
+  static String id = '_id';
+  static String name = 'name';
 }
 
 class InspectionTable {

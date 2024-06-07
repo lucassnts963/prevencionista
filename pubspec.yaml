@@ -36,10 +36,14 @@ dependencies:
   image: ^4.2.0
   intl: ^0.19.0
   sqflite:
-  flutter_bloc: ^8.1.5
   image_gallery_saver: ^2.0.3
   permission_handler: ^11.3.1
   path_provider: ^2.1.3
+  url_launcher: ^6.3.0
+  clipboard: ^0.1.3
+  fluttertoast: ^8.0.9
+  pdf: ^3.10.8
+  printing: ^5.12.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -71,6 +75,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/roboto.zip
+    - assets/report_model.txt
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

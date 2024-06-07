@@ -22,6 +22,7 @@ class OpportunityCreateMapper
   @override
   OpportunityCreateDTO mapTo(Opportunity output) {
     return OpportunityCreateDTO(
+      id: output.id,
       description: output.description,
       local: output.local,
       action: output.action,

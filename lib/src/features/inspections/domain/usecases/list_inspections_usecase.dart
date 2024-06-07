@@ -6,9 +6,16 @@ import 'package:sqflite/sqflite.dart';
 
 class ListInspectionsUseCase {
 
-  static Future<List<Inspection>?> execute() async {
-    Database database = await Sqlite.getDatabase();
-    InspectionsRepository repository = InspectionsSqliteRepository(database);
-    return await repository.findAll();
+  static Future<List<Inspection>> execute() async {
+
+    try {
+      Database database = await Sqlite.getDatabase();
+      InspectionsRepository repository = InspectionsSqliteRepository(database);
+      List<Inspection> inspections = await repository.findAll();
+      return inspections;
+    } on Exception catch (error) {
+      rethrow;
+    }
+
   }
 }
